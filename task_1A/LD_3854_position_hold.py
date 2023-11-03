@@ -1,25 +1,3 @@
-#!/usr/bin/env python3
-
-'''
-
-This python file runs a ROS-node of name drone_control which holds the position of Swift-Drone on the given dummy.
-This node publishes and subsribes the following topics:
-
-		PUBLICATIONS			SUBSCRIPTIONS
-		/drone_command			/whycon/poses
-		/alt_error				/pid_tuning_altitude
-		/pitch_error			/pid_tuning_pitch
-		/roll_error				/pid_tuning_roll
-					
-								
-
-Rather than using different variables, use list. eg : self.setpoint = [1,2,3], where index corresponds to x,y,z ...rather than defining self.x_setpoint = 1, self.y_setpoint = 2
-CODE MODULARITY AND TECHNIQUES MENTIONED LIKE THIS WILL HELP YOU GAINING MORE MARKS WHILE CODE EVALUATION.	
-'''
-
-# Importing the required libraries
-
-
 from swift_msgs.msg import *
 from typing import *
 from swift_msgs.msg import swift_msgs
@@ -100,22 +78,6 @@ class swift():
 		self.alt_error_pub = rospy.Publisher('/alt_error',Float64, queue_size=1)
 
 
-
-    
-
-
-
-        
-		#------------------------Add other ROS Publishers here-----------------------------------------------------
-
-
-
-
-
-
-	#-----------------------------------------------------------------------------------------------------------
-
-
 		# Subscribing to /whycon/poses, /pid_tuning_altitude, /pid_tuning_pitch, pid_tuning_roll
 		rospy.Subscriber('whycon/poses', PoseArray, self.whycon_callback)
 		rospy.Subscriber('/pid_tuning_altitude',PidTune,self.altitude_set_pid)
@@ -170,7 +132,7 @@ class swift():
 	# Callback function for /pid_tuning_altitude
 	# This function gets executed each time when /tune_pid publishes /pid_tuning_altitude
 	def altitude_set_pid(self,alt):
-		print("lauda")
+		print("HELLO")
 		#self.Kp[2] = alt.Kp *0.06
 		self.Kp[2] =120.42
 		
@@ -180,13 +142,13 @@ class swift():
 		
 	#----------------------------Define callback function like altitide_set_pid to tune pitch, roll--------------
 	def roll_set_pid(self,alt):
-		print("lauda")
+		print("Hello")
 		self.Kp[0] = 61.62
 		#* 0.06 # This is just for an example. You can change the ratio/fraction value accordingly
 		self.Ki[0] = 0.024
 		self.Kd[0] = 524.4
 	def pitch_set_pid(self,alt):
-		print("lauda")
+		print("Hello")
 		self.Kp[1] = 39.18
 		#* 0.06 # This is just for an example. You can change the ratio/fraction value accordingly
 		self.Ki[1] = 0.008
@@ -205,20 +167,6 @@ class swift():
 	#----------------------------------------------------------------------------------------------------------------------
 
 	def pid(self):
-	 #-----------------------------Write the PID algorithm here--------------------------------------------------------------
-
-	 # Steps:
-	 # 	1. Compute error in each axis. eg: error[0] = self.drone_position[0] - self.setpoint[0] ,where error[0] corresponds to error in x...
-	 #	2. Compute the error (for proportional), change in error (for derivative) and sum of errors (for integral) in each axis. Refer "Understanding PID.pdf" to understand PID equation.
-	 #	3. Calculate the pid output required for each axis. For eg: calcuate self.out_roll, self.out_pitch, etc.
-	 #	4. Reduce or add this computed output value on the avg value ie 1500. For eg: self.cmd.rcRoll = 1500 + self.out_roll. LOOK OUT FOR SIGN (+ or -). EXPERIMENT AND FIND THE CORRECT SIGN
-	 #	5. Don't run the pid continously. Run the pid only at the a sample time. self.sampletime defined above is for this purpose. THIS IS VERY IMPORTANT.
-	 #	6. Limit the output value and the final command value between the maximum(2000) and minimum(1000)range before publishing. For eg : if self.cmd.rcPitch > self.max_values[1]:
-	 #																														self.cmd.rcPitch = self.max_values[1]
-	 #	7. Update previous errors.eg: self.prev_error[1] = error[1] where index 1 corresponds to that of pitch (eg)
-	 #	8. Add error_sum
-	 
-	 
 		self.Kp[1] = 39.18
 		self.Ki[1] = 0.008
 		self.Kd[1] = 406.2
