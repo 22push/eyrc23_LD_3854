@@ -56,7 +56,7 @@ class swift():
 	def __init__(self):
 
 		
-		rospy.init_node('drone_control')	# initializing ros node with name drone_control
+		rospy.init_node('drone_control')	
 
 		# This corresponds to your current position of drone. This value must be updated each time in your whycon callback
 		# [x,y,z]
@@ -329,23 +329,6 @@ class swift():
 	#----------------------------------------------------------------------------------------------------------------------
 
 	def pid(self):
-	 #-----------------------------Write the PID algorithm here--------------------------------------------------------------
-
-	 # Steps:
-	 # 	1. Compute error in each axis. eg: error[0] = self.drone_position[0] - self.setpoint[0] ,where error[0] corresponds to error in x...
-	 #	2. Compute the error (for proportional), change in error (for derivative) and sum of errors (for integral) in each axis. Refer "Understanding PID.pdf" to understand PID equation.
-	 #	3. Calculate the pid output required for each axis. For eg: calcuate self.out_roll, self.out_pitch, etc.
-	 #	4. Reduce or add this computed output value on the avg value ie 1500. For eg: self.cmd.rcRoll = 1500 + self.out_roll. LOOK OUT FOR SIGN (+ or -). EXPERIMENT AND FIND THE CORRECT SIGN
-	 #	5. Don't run the pid continously. Run the pid only at the a sample time. self.sampletime defined above is for this purpose. THIS IS VERY IMPORTANT.
-	 #	6. Limit the output value and the final command value between the maximum(2000) and minimum(1000)range before publishing. For eg : if self.cmd.rcPitch > self.max_values[1]:
-	 #																														self.cmd.rcPitch = self.max_values[1]
-	 #	7. Update previous errors.eg: self.prev_error[1] = error[1] where index 1 corresponds to that of pitch (eg)
-	 #	8. Add error_sum
-	 
-	 
-		
-		
-		
 		self.alt_error[2] = self.setpoint[2] - self.drone_position[2]
 		self.alt_error[0] = self.setpoint[0] - self.drone_position[0]
 		self.alt_error[1] = self.setpoint[1] - self.drone_position[1]
